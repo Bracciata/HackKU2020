@@ -23,8 +23,8 @@ class _MyAppState extends State<MyApp> {
   double pitch = 1.0;
   double rate = 0.4;
 
-
-  String _newVoiceText = "Hello, Welcome to CrossGuard. Where would you like to go? ";
+  String _newVoiceText =
+      "Hello, Welcome to CrossGuard. Where would you like to go? ";
 
   TtsState ttsState = TtsState.stopped;
 
@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         print("Complete");
         ttsState = TtsState.stopped;
+        prompt();
       });
     });
 
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future _speak() async {
+    
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
@@ -99,58 +101,59 @@ class _MyAppState extends State<MyApp> {
   final SpeechToText speech = SpeechToText();
 
   Future<void> initSpeechState() async {
-    bool hasSpeech = await speech.initialize(onError: errorListener, onStatus: statusListener );
+    bool hasSpeech = await speech.initialize(
+        onError: errorListener, onStatus: statusListener);
 
     if (!mounted) return;
     setState(() {
       _hasSpeech = hasSpeech;
     });
-    
   }
+
   Future<void> prompt() async {
-    if(_hasSpeech){
-      await Future.delayed(const Duration(seconds: 4), (){});
-    print("listenig");
-    startListening();
+    if (_hasSpeech) {
+      await Future.delayed(const Duration(seconds: 1), () {});
+      print("listenig");
+      startListening();
 
-        await Future.delayed(const Duration(seconds: 7), (){});
-    stop();
-    checkForLocation();
+      await Future.delayed(const Duration(seconds: 7), () {});
+      stop();
+      checkForLocation();
     }
   }
-  void checkForLocation(){
-    if(lastWords == "FOUND TODO"){
+
+  Future<void> checkForLocation() async {
+    String parseWords = lastWords.toLowerCase();
+    if (parseWords == "FOUND TODO") {
       // DO COOL STUFF HACKER MAN
-    }else{
-      setState(() {
-        _newVoiceText = "Sorry I did not catch that."
-        initTts();
-      });
+    }else if(parseWords.contains("stop")||parseWords.contains("no")){
 
-      prompt();
+    } else {
+      setState(() {
+        _newVoiceText = "Sorry I did not catch that. Where would you like to go?";
+
+      });
+              await Future.delayed(const Duration(seconds: 1), () {});
+        _speak();
+
     }
   }
+
   void startListening() {
     lastWords = "";
     lastError = "";
-    speech.listen(onResult: resultListener );
-    setState(() {
-      
-    });
+    speech.listen(onResult: resultListener);
+    setState(() {});
   }
 
   void stopListening() {
-    speech.stop( );
-    setState(() {
-      
-    });
+    speech.stop();
+    setState(() {});
   }
 
   void cancelListening() {
-    speech.cancel( );
-    setState(() {
-      
-    });
+    speech.cancel();
+    setState(() {});
   }
 
   void resultListener(SpeechRecognitionResult result) {
@@ -159,16 +162,18 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void errorListener(SpeechRecognitionError error ) {
+  void errorListener(SpeechRecognitionError error) {
     setState(() {
       lastError = "${error.errorMsg} - ${error.permanent}";
     });
   }
-  void statusListener(String status ) {
+
+  void statusListener(String status) {
     setState(() {
       lastStatus = "$status";
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -177,8 +182,6 @@ class _MyAppState extends State<MyApp> {
               title: Text('Flutter TTS'),
             ),
             body: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(children: []))));
+                scrollDirection: Axis.vertical, child: Column(children: []))));
   }
-
 }
