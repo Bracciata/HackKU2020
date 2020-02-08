@@ -156,6 +156,11 @@ void openCamera(){
   // TODO: Say weather before this.
   // Weather has been said at this time sooooooooooo.
   // Pass directions.
+  Navigator.push(
+    parentContext,
+    MaterialPageRoute(
+      builder: (context) => Camera(directionsObj: directions),
+    ));
 }
   Location destinationLocation;
   Future<void> findLocation(String query) async {
@@ -354,9 +359,10 @@ void openCamera(){
       _child = mapWidget();
     });
   }
-
+  BuildContext parentContext;
   @override
   Widget build(BuildContext context) {
+    parentContext=context;
     return Scaffold(
       appBar: AppBar(
         title: Text('CrossGuard'),
