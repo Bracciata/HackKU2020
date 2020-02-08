@@ -44,6 +44,8 @@
 	<string>This application needs to access your microphone</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This application needs the speech recognition permission</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<key>NSMicrophoneUsageDescription</key> 
 	<false/>
 </dict>
 </plist>
