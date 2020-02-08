@@ -9,6 +9,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'camera.dart';
 
 enum TtsState { playing, stopped }
 
@@ -21,10 +22,10 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Google Maps',
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
+    return MaterialApp(
+      title: 'Smart ',
+      theme: ThemeData(
+              primarySwatch: Colors.deepPurple,
       ),
       home: new MyHomePage(),
     );
@@ -60,7 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "Hello, Welcome to CrossGuard. Where would you like to go? ";
 
   TtsState ttsState = TtsState.stopped;
-
   get isPlaying => ttsState == TtsState.playing;
 
   get isStopped => ttsState == TtsState.stopped;
@@ -159,7 +159,7 @@ void openCamera(){
   Navigator.push(
     parentContext,
     MaterialPageRoute(
-      builder: (context) => Camera(directionsObj: directions),
+      builder: (context) => CameraPreviewScanner(directionsObj: directions),
     ));
 }
   Location destinationLocation;
