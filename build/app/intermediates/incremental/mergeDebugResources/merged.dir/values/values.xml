@@ -337,6 +337,13 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="default_web_client_id" translatable="false">52612222508-nu26ufpg6ndjk5n0lgfqrvdv5edlkbe2.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://hackku2020.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">52612222508</string>
+    <string name="google_api_key" translatable="false">AIzaSyAsGJleoog7Paxk-ihtACiuX-Pa8eRdC5A</string>
+    <string name="google_app_id" translatable="false">1:52612222508:android:5a71d8faab87af50a1cb89</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAsGJleoog7Paxk-ihtACiuX-Pa8eRdC5A</string>
+    <string name="google_storage_bucket" translatable="false">hackku2020.appspot.com</string>
     <string name="mapbox_attributionErrorNoBrowser">No web browser installed on device, can\'t open web page.</string>
     <string name="mapbox_attributionTelemetryMessage">You are helping to make OpenStreetMap and Mapbox maps better by contributing anonymous usage data.</string>
     <string name="mapbox_attributionTelemetryNegative">Disagree</string>
@@ -360,6 +367,7 @@
     <string name="mapbox_telemetryImproveMap">Improve This Map</string>
     <string name="mapbox_telemetryLink" translatable="false">https://www.mapbox.com/telemetry/</string>
     <string name="mapbox_telemetrySettings">Telemetry Settings</string>
+    <string name="project_id" translatable="false">hackku2020</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

@@ -1069,6 +1069,13 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string default_web_client_id
+string firebase_database_url
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string mapbox_attributionErrorNoBrowser
 string mapbox_attributionTelemetryMessage
 string mapbox_attributionTelemetryNegative
@@ -1092,6 +1099,7 @@ string mapbox_style_traffic_night
 string mapbox_telemetryImproveMap
 string mapbox_telemetryLink
 string mapbox_telemetrySettings
+string project_id
 string search_menu_title
 string status_bar_notification_info_overflow
 style AlertDialog_AppCompat
