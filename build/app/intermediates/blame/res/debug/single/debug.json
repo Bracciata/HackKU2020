@@ -140,10 +140,6 @@
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable-mdpi-v4\\googleg_disabled_color_18.png"
     },
     {
-        "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_action.xml.flat",
-        "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\layout\\notification_action.xml"
-    },
-    {
         "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat",
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable-xhdpi-v4\\common_google_signin_btn_icon_dark_normal_background.9.png"
     },
@@ -256,10 +252,6 @@
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
-        "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout-v16_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\layout-v16\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media_narrow.xml.flat",
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\6d35bbbe327ef689c582d1173367f0ed\\media-1.0.0\\res\\layout\\notification_template_big_media_narrow.xml"
     },
@@ -332,20 +324,12 @@
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable-xhdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
     },
     {
-        "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_action_tombstone.xml.flat",
-        "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\layout\\notification_action_tombstone.xml"
-    },
-    {
         "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat",
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
     },
     {
         "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light.xml.flat",
         "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\f5c177ead15d5de14ee61dff33724d75\\jetified-play-services-base-16.0.1\\res\\drawable\\common_google_signin_btn_text_light.xml"
-    },
-    {
-        "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_template_icon_group.xml.flat",
-        "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\layout\\notification_template_icon_group.xml"
     },
     {
         "merged": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_template_part_time.xml.flat",
