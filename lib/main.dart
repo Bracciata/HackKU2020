@@ -46,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -81,50 +80,74 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(icon: Icon(Icons.star),onPressed:(){
-              getData();
-            },)
+            IconButton(
+              icon: Icon(Icons.star),
+              onPressed: () {
+                getData();
+              },
+            )
           ],
         ),
       ),
-      
     );
   }
+
   Future<String> getData() async {
-  var response = await http.get(
-      Uri.encodeFull("http://dataservice.accuweather.com/currentconditions/v1/329505?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
-      headers: {"Accept": "application/json"});
-  setState(() {
-    var data = json.decode(response.body);
-    print(data);
-    var x = 7;
-  });
-  return "Success";
+    var response = await http.get(
+        Uri.encodeFull(
+            "http://dataservice.accuweather.com/currentconditions/v1/329505?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
+        headers: {"Accept": "application/json"});
+    setState(() {
+      var data = json.decode(response.body);
+      print(data);
+      String icyConditions = checkForIcePossible(data);
+      var x = 7;
+    });
+    return "Success";
   }
-  String checkForIcePossible(List data){
-    double metricAmountPrecip = data["PrecipitaionSummary"]["Past24Hours"]["Metric"]["Value"];
-    double minMetric = data["TemperatureSummary"]["Past24HourRange"]["Minimum"]["Metric"]["Value"];
-    double maxMetric = data["TemperatureSummary"]["Past24HourRange"]["Maximum"]["Metric"]["Value"];
-    double meanOfTwoMeasurements = (minMetric + maxMetric)/2;
-    if(metricAmountPrecip > 1.0){
+
+  String checkForIcePossible(var data) {
+    double metricAmountPrecip =
+        data[0]["PrecipitationSummary"]["Past24Hours"]["Metric"]["Value"];
+    double minMetric = data[0]["TemperatureSummary"]["Past24HourRange"]
+        ["Minimum"]["Metric"]["Value"];
+    double maxMetric = data[0]["TemperatureSummary"]["Past24HourRange"]
+        ["Maximum"]["Metric"]["Value"];
+    double meanOfTwoMeasurements = (minMetric + maxMetric) / 2;
+    if (metricAmountPrecip > 1.0) {
       // Check for avg temp to be below freezing.
-        if (meanOfTwoMeasurements < 0){
-          return " Ice is likely.";
-        }else if meanOfTwoMeasurements <= 10){
-          return " Ice is possible.";   
-        }else{
-          return "Ice is not likely";
-        }
-    }
-      // Do not expect icy conditions
-      if(meanOfTwoMeasurements < 0){
-        return " We are unsure if there will be ice on the route.";
+      if (meanOfTwoMeasurements < 0) {
+        return " Ice is likely.";
+      } else if (meanOfTwoMeasurements <= 10) {
+        return " Ice is possible.";
+      } else {
+        return "Ice is not likely.";
       }
-      return "Ice is not likely.";
-  
-
+    }
+    // Do not expect icy conditions
+    if (meanOfTwoMeasurements < 0) {
+      return " We are unsure if there will be ice on the route.";
+    }
+    return " Ice is not likely.";
   }
-  String getCurrentConditions(){
 
+  String getCurrentConditions(var data) {
+    String currentConditions = "";
+    if (data[0]["HasPrecipitation"] == true) {
+      // Check percip type
+      currentConditions =
+          ' There is currently percipitation in the form of ${data[0]["PrecipitationType"]}.';
+    } else {
+      currentConditions = "There is not any percipitation on the route.";
+    }
+    currentConditions = currentConditions +
+        ' The current temperature is ${data[0]["Temperature"]["Metric"]["Value"]}';
+    if (data[0]["Temperature"]["Metric"]["Value"] !=
+        data[0]["RealFeelTemperature"]["Metric"]["Value"]) {
+      return currentConditions +
+          ', however, it feels like ${data[0]["RealFeelTemperature"]["Metric"]["Value"]}';
+    } else {
+      return currentConditions + ".";
+    }
   }
 }
