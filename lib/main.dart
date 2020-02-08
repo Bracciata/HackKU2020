@@ -9,10 +9,11 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+
 enum TtsState { playing, stopped }
 
-final places = GoogleMapsPlaces(
-    apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
+final places =
+    GoogleMapsPlaces(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
 final directions =
     GoogleMapsDirections(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
 void main() => runApp(App());
@@ -112,7 +113,6 @@ class _MyHomePageState extends State<MyHomePage> {
     if (result == 1) setState(() => ttsState = TtsState.stopped);
   }
 
-
   // speech to text
   Future<void> initSpeechState() async {
     bool hasSpeech = await speech.initialize(
@@ -123,25 +123,29 @@ class _MyHomePageState extends State<MyHomePage> {
       _hasSpeech = hasSpeech;
     });
   }
+
   int _expectedResponseTime = 7;
   // Prompt is called after _speak is called to say anything in this file.
   // Prompt activates the mic and then calls the parser.
   Future<void> prompt() async {
     if (_hasSpeech) {
-      await Future.delayed(const Duration(seconds: 1), () {});
-      startListening();
-      await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
-      stop();
-      parseSpeachResponse();
-    }else{
-      print("Speech is not enabled.");
+      if (promptUser) {
+        await Future.delayed(const Duration(seconds: 1), () {});
+        startListening();
+        await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
+        stop();
+        parseSpeachResponse();
+      }
+    } else {
+      print("Speech recognition is not enabled.");
     }
   }
+
   Location destinationLocation;
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
     PlacesAutocompleteResponse res =
-await places.autocomplete(query, sessionToken: sessionToken);
+        await places.autocomplete(query, sessionToken: sessionToken);
 
     if (res.isOkay) {
       // list autocomplete prediction
@@ -163,17 +167,20 @@ await places.autocomplete(query, sessionToken: sessionToken);
       destinationLocation = Location(latDest, lngDest);
       // Ask if location is correct and if so proceed.
       setState(() {
-      _newVoiceText = 'Is ${details.result.formattedAddress} the correct address?';
-      _expectedResponseTime = 2;
+        _newVoiceText =
+            'Is ${details.result.formattedAddress} the correct address?';
+        _expectedResponseTime = 4;
+        confirmingAddress = true;
       });
+      await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
-
     } else {
       print(res.errorMessage);
       setState(() {
         _newVoiceText =
             "Sorry I did not catch that. Where would you like to go?";
-            _expectedResponseTime = 7;
+        _expectedResponseTime = 7;
+        confirmingAddress = false;
       });
       await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
@@ -181,55 +188,63 @@ await places.autocomplete(query, sessionToken: sessionToken);
 
     places.dispose();
   }
-  Future<void> getDirections()async{
-   DirectionsResponse res =
-      await directions.directionsWithLocation(currentlocation,destinationLocation,travelMode: TravelMode.walking);
 
-  print(res.status);
-  if (res.isOkay) {
-    print('${res.routes.length} routes');
-    for (var r in res.routes) {
-      print(r.summary);
-      print(r.bounds);
+  Future<void> getDirections() async {
+    DirectionsResponse res = await directions.directionsWithLocation(
+        currentlocation, destinationLocation,
+        travelMode: TravelMode.walking);
+
+    print(res.status);
+    if (res.isOkay) {
+      print('${res.routes.length} routes');
+      for (var r in res.routes) {
+        print(r.summary);
+        print(r.bounds);
+      }
+    } else {
+      print(res.errorMessage);
     }
-  } else {
-    print(res.errorMessage);
+
+    directions.dispose();
   }
 
-  directions.dispose();
-}
   Future<void> parseSpeachResponse() async {
     String parseWords = lastWords.toLowerCase();
-    if(parseWords.contains("yes")){
-      // Using the address go to the location.
-      getDirections();
-      print('YAY');
-      // Send the directions to camera.
-    }else if(parseWords.contains("no")){
-      // End and repeat end of file
-      setState(() {
-        _newVoiceText =
-            "My bad. Where would you like to go?";
-            _expectedResponseTime = 7;
-      });
-      await Future.delayed(const Duration(seconds: 1), () {});
-      _speak();
-    }
-     else if (parseWords.contains("stop")) {
-      setState(() {
-        _newVoiceText = "Okay, goodbye!";
-      });
-      await Future.delayed(const Duration(seconds: 1), () {});
-      // TODO: Prevent from prompting here!!!
-      _speak();
-    } else{
-      print('Looking for the location $parseWords.');
-      findLocation(parseWords);
+    if (confirmingAddress) {
+      if (parseWords.contains("yes")) {
+        // Using the address go to the location.
+        print("YAAYY");
+        getDirections();
+        // Speak about weather then start journey and pass directions
+        // Send the directions to camera.
+      } else if (parseWords.contains("no")) {
+        // End and repeat end of file
+        setState(() {
+          confirmingAddress = false;
+          _newVoiceText = "My bad. Where would you like to go?";
+          _expectedResponseTime = 7;
+        });
+        await Future.delayed(const Duration(seconds: 1), () {});
+        _speak();
       }
+    } else {
+      print("DEBUG NOT CONFIRMING ADDR");
+      if (parseWords.contains("stop")) {
+        setState(() {
+          _newVoiceText = "Okay, goodbye!";
+          promptUser = false;
+        });
 
-
+        _speak();
+      } else {
+        print('Looking for the location $parseWords.');
+        await findLocation(parseWords);
+      }
+    }
   }
 
+  // TODO: When prompting is it the correct location add a marker for the location because that is cool.
+  bool promptUser = true;
   void startListening() {
     lastWords = "";
     lastError = "";
@@ -259,11 +274,13 @@ await places.autocomplete(query, sessionToken: sessionToken);
     });
   }
 
+  bool confirmingAddress = false;
   void statusListener(String status) {
     setState(() {
       lastStatus = "$status";
     });
   }
+
   @override
   void initState() {
     getCurrentLocation();
@@ -315,5 +332,4 @@ await places.autocomplete(query, sessionToken: sessionToken);
       },
     );
   }
-
 }
