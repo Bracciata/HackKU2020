@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Emma Hubka\\git\\hackku2020\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rIN\\values-en-rIN.xml",
+            "outputFile": "C:\\Users\\bracc\\Documents\\Dev\\Flutter\\hackku2020\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rIN\\values-en-rIN.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Emma Hubka\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\values-en-rIN\\values-en-rIN.xml",
+                    "source": "C:\\Users\\bracc\\.gradle\\caches\\transforms-2\\files-2.1\\0a271e99b6771ad4a84318244d532fb7\\core-1.0.0\\res\\values-en-rIN\\values-en-rIN.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

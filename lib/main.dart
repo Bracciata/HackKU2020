@@ -18,9 +18,9 @@ class _MyAppState extends State<MyApp> {
   String language;
   double volume = 0.5;
   double pitch = 1.0;
-  double rate = 0.5;
+  double rate = 0.4;
 
-  String _newVoiceText = "Hello World";
+  String _newVoiceText = "Kill Emma Hubka NOW";
 
   TtsState ttsState = TtsState.stopped;
 
