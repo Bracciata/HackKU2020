@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
         await Future.delayed(const Duration(seconds: 1), () {});
         startListening();
         await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
-        stop();
+        await stop();
         // Safety of analysis
         await Future.delayed(Duration(seconds: 1), () {});
 
@@ -206,7 +206,6 @@ void openCamera(){
         _expectedResponseTime = 4;
         confirmingAddress = true;
       });
-      await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
     } else {
       print(res.errorMessage);
@@ -216,7 +215,6 @@ void openCamera(){
         _expectedResponseTime = 7;
         confirmingAddress = false;
       });
-      await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
     }
 
@@ -270,7 +268,7 @@ void openCamera(){
           _newVoiceText = "My bad. Where would you like to go?";
           _expectedResponseTime = 7;
         });
-        await Future.delayed(const Duration(seconds: 1), () {});
+
         _speak();
       } else {
         setState(() {
