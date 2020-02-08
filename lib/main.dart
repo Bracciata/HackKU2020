@@ -19,13 +19,45 @@ final directions =
     GoogleMapsDirections(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
 void main() => runApp(App());
 
+Map<int, Color> color =
+{
+50:Color.fromRGBO(81,12,118, .1),
+100:Color.fromRGBO(81,12,118, .2),
+200:Color.fromRGBO(81,12,118, .3),
+300:Color.fromRGBO(81,12,118, .4),
+400:Color.fromRGBO(81,12,118, .5),
+500:Color.fromRGBO(81,12,118, .6),
+600:Color.fromRGBO(81,12,118, .7),
+700:Color.fromRGBO(81,12,118, .8),
+800:Color.fromRGBO(81,12,118, .9),
+900:Color.fromRGBO(81,12,118, 1),
+};
+
+Map<int, Color> darkColor =
+{
+50:Color.fromRGBO(126,87,198, .1),
+100:Color.fromRGBO(126,87,198, .2),
+200:Color.fromRGBO(126,87,198, .3),
+300:Color.fromRGBO(126,87,198, .4),
+400:Color.fromRGBO(126,87,198, .5),
+500:Color.fromRGBO(126,87,198, .6),
+600:Color.fromRGBO(126,87,198, .7),
+700:Color.fromRGBO(126,87,198, .8),
+800:Color.fromRGBO(126,87,198, .9),
+900:Color.fromRGBO(126,87,198, 1),
+};
+
+MaterialColor colorCustom = MaterialColor(0xFF7E57C6, darkColor);
+MaterialColor colorCustomDark = MaterialColor(0xFF510C76, color);
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Smart ',
       theme: ThemeData(
-              primarySwatch: Colors.deepPurple,
+        primaryColor: colorCustomDark,
+        primaryColorDark: colorCustomDark,
       ),
       home: new MyHomePage(),
     );
@@ -375,8 +407,17 @@ void openCamera(){
       Marker(
           markerId: MarkerId("current_location"),
           position: LatLng(position.latitude, position.longitude),
-          icon: BitmapDescriptor.defaultMarker,
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+            25.0,
+          ),
           infoWindow: InfoWindow(title: "Current Location")),
+      Marker(
+          markerId: MarkerId("destination"),
+          position: LatLng(38.95849, -95.247551),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+            265.0,
+          ),
+          infoWindow: InfoWindow(title: "Destination")),
     ].toSet();
   }
 
