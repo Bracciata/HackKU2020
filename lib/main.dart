@@ -134,6 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
         startListening();
         await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
         stop();
+        // Safety of analysis
+        await Future.delayed(Duration(seconds: 1), () {});
+
         parseSpeachResponse();
       }
     } else {
@@ -159,6 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
           sessionToken: sessionToken);
 
       print('\nDetails :');
+      setState(() {
+        nameOfPlace = details.result.formattedAddress;
+      });
       print(details.result.formattedAddress);
       print(details.result.formattedPhoneNumber);
       print(details.result.url);
@@ -208,6 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
     directions.dispose();
   }
 
+  String nameOfPlace;
   Future<void> parseSpeachResponse() async {
     String parseWords = lastWords.toLowerCase();
     if (confirmingAddress) {
@@ -226,13 +233,29 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         await Future.delayed(const Duration(seconds: 1), () {});
         _speak();
+      } else {
+        setState(() {
+          confirmingAddress = true;
+          _newVoiceText =
+              "Sorry I did not catch that, is $nameOfPlace where you would like to go?";
+          _expectedResponseTime = 4;
+        });
+        _speak();
       }
     } else {
-      print("DEBUG NOT CONFIRMING ADDR");
       if (parseWords.contains("stop")) {
         setState(() {
           _newVoiceText = "Okay, goodbye!";
           promptUser = false;
+        });
+
+        _speak();
+      } else if (parseWords == null || parseWords == '') {
+        setState(() {
+          _newVoiceText =
+              "Oops I didn't catch that, where would you like to go?";
+          _expectedResponseTime = 7;
+          confirmingAddress = false;
         });
 
         _speak();
