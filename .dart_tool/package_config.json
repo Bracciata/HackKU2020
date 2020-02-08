@@ -98,6 +98,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///C:/Users/eusko/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.7.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/Users/eusko/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -230,13 +236,19 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "yaml",
+      "rootUri": "file:///C:/Users/eusko/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "hackku2020",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-08T12:29:24.487164Z",
+  "generated": "2020-02-08T12:37:09.570808Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
