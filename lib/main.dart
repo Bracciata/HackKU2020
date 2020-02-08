@@ -74,7 +74,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future _speak() async {
-    
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
@@ -126,21 +125,19 @@ class _MyAppState extends State<MyApp> {
     String parseWords = lastWords.toLowerCase();
     if (parseWords == "FOUND TODO") {
       // DO COOL STUFF HACKER MAN
-    }else if(parseWords.contains("stop")||parseWords.contains("no")){
+    } else if (parseWords.contains("stop") || parseWords.contains("no")) {
       setState(() {
         _newVoiceText = "Okay, goodbye!";
-
       });
       await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
     } else {
       setState(() {
-        _newVoiceText = "Sorry I did not catch that. Where would you like to go?";
-
+        _newVoiceText =
+            "Sorry I did not catch that. Where would you like to go?";
       });
-              await Future.delayed(const Duration(seconds: 1), () {});
-        _speak();
-
+      await Future.delayed(const Duration(seconds: 1), () {});
+      _speak();
     }
   }
 
