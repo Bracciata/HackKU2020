@@ -92,8 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  String currentWeatherConditions = "";
   Future<String> getData() async {
-    String cityId="329505";
+    String cityId = "329505";
     var response = await http.get(
         Uri.encodeFull(
             "http://dataservice.accuweather.com/currentconditions/v1/${cityId}?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
@@ -103,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print(data);
       String icyConditions = checkForIcePossible(data);
       String currentConditions = getCurrentConditions(data);
-      var x = 7;
+      currentWeatherConditions = currentConditions + icyConditions;
     });
     return "Success";
   }
