@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
 void openCamera(){
   print("Opening the camera");
   // TODO: Say weather before this.
-  // Weather has been said at this time sooooooooooo.
+  // Weather has been said at this time.
   // Pass directions.
   Navigator.push(
     parentContext,
