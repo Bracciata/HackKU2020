@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     places.dispose();
   }
-
+  bool openingCamera = false;
   Future<void> getDirections() async {
     DirectionsResponse res = await directions.directionsWithLocation(
         currentlocation, destinationLocation,
@@ -230,8 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (confirmingAddress) {
       if (parseWords.contains("yes")) {
         // Using the address go to the location.
-        print("YAAYY");
-        getDirections();
+        var directions = getDirections();
         // Speak about weather then start journey and pass directions
         // Send the directions to camera.
       } else if (parseWords.contains("no")) {
