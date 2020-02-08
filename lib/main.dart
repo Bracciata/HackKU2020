@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Weather'),
     );
   }
 }
@@ -79,11 +81,50 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-           
+            IconButton(icon: Icon(Icons.star),onPressed:(){
+              getData();
+            },)
           ],
         ),
       ),
       
     );
+  }
+  Future<String> getData() async {
+  var response = await http.get(
+      Uri.encodeFull("http://dataservice.accuweather.com/currentconditions/v1/329505?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
+      headers: {"Accept": "application/json"});
+  setState(() {
+    var data = json.decode(response.body);
+    print(data);
+    var x = 7;
+  });
+  return "Success";
+  }
+  String checkForIcePossible(List data){
+    double metricAmountPrecip = data["PrecipitaionSummary"]["Past24Hours"]["Metric"]["Value"];
+    double minMetric = data["TemperatureSummary"]["Past24HourRange"]["Minimum"]["Metric"]["Value"];
+    double maxMetric = data["TemperatureSummary"]["Past24HourRange"]["Maximum"]["Metric"]["Value"];
+    double meanOfTwoMeasurements = (minMetric + maxMetric)/2;
+    if(metricAmountPrecip > 1.0){
+      // Check for avg temp to be below freezing.
+        if (meanOfTwoMeasurements < 0){
+          return " Ice is likely.";
+        }else if meanOfTwoMeasurements <= 10){
+          return " Ice is possible.";   
+        }else{
+          return "Ice is not likely";
+        }
+    }
+      // Do not expect icy conditions
+      if(meanOfTwoMeasurements < 0){
+        return " We are unsure if there will be ice on the route.";
+      }
+      return "Ice is not likely.";
+  
+
+  }
+  String getCurrentConditions(){
+
   }
 }

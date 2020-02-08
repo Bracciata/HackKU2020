@@ -26,12 +26,6 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "camera",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/camera-0.5.7+3",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "charcode",
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/charcode-1.1.2",
       "packageUri": "lib/",
@@ -62,36 +56,6 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "firebase",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/firebase-7.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.7"
-    },
-    {
-      "name": "firebase_core",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/firebase_core-0.4.3+3",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
-      "name": "firebase_core_platform_interface",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/firebase_core_platform_interface-1.0.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
-      "name": "firebase_core_web",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
-      "name": "firebase_ml_vision",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/firebase_ml_vision-0.9.3+5",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "flutter",
       "rootUri": "file:///C:/src/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -102,12 +66,6 @@
       "rootUri": "file:///C:/src/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
-    },
-    {
-      "name": "flutter_web_plugins",
-      "rootUri": "file:///C:/src/flutter/packages/flutter_web_plugins",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
     },
     {
       "name": "http",
@@ -126,12 +84,6 @@
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/image-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
-    },
-    {
-      "name": "js",
-      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/js-0.6.1+1",
-      "packageUri": "lib/",
-      "languageVersion": "1.19"
     },
     {
       "name": "matcher",
@@ -236,7 +188,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-08T02:01:20.204481Z",
+  "generated": "2020-02-08T15:58:03.270690Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.6.0.flutter-5ae5aff640"
 }
