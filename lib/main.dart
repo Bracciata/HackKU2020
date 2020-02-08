@@ -124,16 +124,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   int _expectedResponseTime = 7;
+  // Prompt is called after _speak is called to say anything in this file.
+  // Prompt activates the mic and then calls the parser.
   Future<void> prompt() async {
     if (_hasSpeech) {
       await Future.delayed(const Duration(seconds: 1), () {});
       startListening();
       await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
       stop();
-      checkForLocation();
+      parseSpeachResponse();
+    }else{
+      print("Speech is not enabled.");
     }
   }
-Future<bool> findLocation(String query) async {
+  Location destinationLocation;
+  Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
     PlacesAutocompleteResponse res =
         await places.autocomplete(query, sessionToken: sessionToken);
@@ -155,26 +160,21 @@ Future<bool> findLocation(String query) async {
       print(details.result.url);
       double latDest = details.result.geometry.location.lat;
       double lngDest = details.result.geometry.location.lng;
-      Location locationOfDestination = Location(latDest, lngDest);
+      destinationLocation = Location(latDest, lngDest);
       // Ask if location is correct and if so proceed.
-      // TODO add.
-       if(askIfCorrectLocation()){
-      // If yes
-      getDirections(locationOfDestination);
-      // Open camera
-      return true;
-      }else{
-        return false;
-      }
+      setState(() {
+      _newVoiceText = 'Is ${details.result.formattedAddress} the correct address?';
+      _expectedResponseTime = 2;
+      });
+      _speak();
 
     } else {
       print(res.errorMessage);
-      return false;
     }
 
     places.dispose();
   }
-  Future<void> getDirections(Location destinationLocation)async{
+  Future<void> getDirections()async{
    DirectionsResponse res =
       await directions.directionsWithLocation(currentlocation,destinationLocation,travelMode: TravelMode.walking);
 
@@ -191,26 +191,42 @@ Future<bool> findLocation(String query) async {
 
   directions.dispose();
 }
-  Future<void> checkForLocation() async {
+  Future<void> parseSpeachResponse() async {
     String parseWords = lastWords.toLowerCase();
-     if (parseWords.contains("stop") || parseWords.contains("no")) {
+    if(parseWords.contains("yes")){
+      // Using the address go to the location.
+      getDirections();
+      // Send the directions to camera.
+    }else if(parseWords.contains("no")){
+      // End and repeat end of file
+      setState(() {
+        _newVoiceText =
+            "My bad. Where would you like to go?";
+            _expectedResponseTime = 7;
+      });
+      await Future.delayed(const Duration(seconds: 1), () {});
+      _speak();
+    }
+     else if (parseWords.contains("stop")) {
       setState(() {
         _newVoiceText = "Okay, goodbye!";
       });
       await Future.delayed(const Duration(seconds: 1), () {});
+      // TODO: Prevent from prompting here!!!
       _speak();
     } else{
-      bool foundLoc = await findLocation(parseWords);
-      if(!foundLoc){
+      findLocation(parseWords);
+      }
+
       // Check for location finds location and sees where they want to go.
-      setState(() {
+     /* setState(() {
         _newVoiceText =
             "Sorry I did not catch that. Where would you like to go?";
             _expectedResponseTime = 7;
       });
       await Future.delayed(const Duration(seconds: 1), () {});
       _speak();
-    }
+    }}*/
   }
 
   void startListening() {
