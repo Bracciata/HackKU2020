@@ -93,14 +93,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> getData() async {
+    String cityId="329505";
     var response = await http.get(
         Uri.encodeFull(
-            "http://dataservice.accuweather.com/currentconditions/v1/329505?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
+            "http://dataservice.accuweather.com/currentconditions/v1/${cityId}?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
         headers: {"Accept": "application/json"});
     setState(() {
       var data = json.decode(response.body);
       print(data);
       String icyConditions = checkForIcePossible(data);
+      String currentConditions = getCurrentConditions(data);
       var x = 7;
     });
     return "Success";
@@ -141,13 +143,13 @@ class _MyHomePageState extends State<MyHomePage> {
       currentConditions = "There is not any percipitation on the route.";
     }
     currentConditions = currentConditions +
-        ' The current temperature is ${data[0]["Temperature"]["Metric"]["Value"]}';
-    if (data[0]["Temperature"]["Metric"]["Value"] !=
-        data[0]["RealFeelTemperature"]["Metric"]["Value"]) {
+        ' The current temperature is ${data[0]["Temperature"]["Imperial"]["Value"]}';
+    if (data[0]["Temperature"]["Imperial"]["Value"] !=
+        data[0]["RealFeelTemperature"]["Imperial"]["Value"]) {
       return currentConditions +
-          ', however, it feels like ${data[0]["RealFeelTemperature"]["Metric"]["Value"]}';
+          ', however, it feels like ${data[0]["RealFeelTemperature"]["Imperial"]["Value"]} fahrenheit.';
     } else {
-      return currentConditions + ".";
+      return currentConditions + "fahrenheit.";
     }
   }
 }
