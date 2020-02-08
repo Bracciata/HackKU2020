@@ -105,15 +105,22 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _hasSpeech = hasSpeech;
     });
-    await Future.delayed(const Duration(seconds: 4), (){});
+    
+  }
+  Future<void> prompt() async {
+    if(_hasSpeech){
+      await Future.delayed(const Duration(seconds: 4), (){});
     print("listenig");
     startListening();
 
         await Future.delayed(const Duration(seconds: 7), (){});
     stop();
-    print("DONE");
+    checkForLocation();
+    }
   }
+  void checkForLocation(){
 
+  }
   void startListening() {
     lastWords = "";
     lastError = "";
