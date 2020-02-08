@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "72951800077",
+    "firebase_url": "https://ku2020-267613.firebaseio.com",
+    "project_id": "ku2020-267613",
+    "storage_bucket": "ku2020-267613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72951800077:android:12abb28ec59b61720e5044",
+        "android_client_info": {
+          "package_name": "com.example.hackku2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72951800077-fcjg7mpkjb331t1ml075qomlruimmdt2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXHCADndFwxIVjZqmTNKmbQ9Bkd-WEIIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72951800077-fcjg7mpkjb331t1ml075qomlruimmdt2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

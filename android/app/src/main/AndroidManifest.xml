@@ -9,6 +9,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="hackku2020"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.mapbox.token" android:value="pk.eyJ1IjoiZGFubnliYXplIiwiYSI6ImNrNWp4amRvZDA4NnEzaXBndWl6ZzBweDQifQ.pKic1DM0S1FVY_pvodbJuw" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBJvXki_O23NgwNyxPDlstAyeJJaeUoMkU"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
