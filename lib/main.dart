@@ -22,7 +22,14 @@ class _MyAppState extends State<MyApp> {
   double volume = 0.5;
   double pitch = 1.0;
   double rate = 0.4;
+  // speech to text
+  bool _hasSpeech = false;
+  String lastWords = "";
+  String lastError = "";
+  String lastStatus = "";
+  final SpeechToText speech = SpeechToText();
 
+  // text to speech
   String _newVoiceText =
       "Hello, Welcome to CrossGuard. Where would you like to go? ";
 
@@ -47,14 +54,12 @@ class _MyAppState extends State<MyApp> {
 
     flutterTts.setStartHandler(() {
       setState(() {
-        print("playing");
         ttsState = TtsState.playing;
       });
     });
 
     flutterTts.setCompletionHandler(() {
       setState(() {
-        print("Complete");
         ttsState = TtsState.stopped;
         prompt();
       });
@@ -62,7 +67,6 @@ class _MyAppState extends State<MyApp> {
 
     flutterTts.setErrorHandler((msg) {
       setState(() {
-        print("error: $msg");
         ttsState = TtsState.stopped;
       });
     });
@@ -81,7 +85,6 @@ class _MyAppState extends State<MyApp> {
     if (_newVoiceText != null) {
       if (_newVoiceText.isNotEmpty) {
         var result = await flutterTts.speak(_newVoiceText);
-        print('it worked');
         if (result == 1) setState(() => ttsState = TtsState.playing);
       }
     }
@@ -89,16 +92,11 @@ class _MyAppState extends State<MyApp> {
 
   Future stop() async {
     var result = await flutterTts.stop();
-    print(result);
     if (result == 1) setState(() => ttsState = TtsState.stopped);
   }
 
-  bool _hasSpeech = false;
-  String lastWords = "";
-  String lastError = "";
-  String lastStatus = "";
-  final SpeechToText speech = SpeechToText();
 
+  // speech to text
   Future<void> initSpeechState() async {
     bool hasSpeech = await speech.initialize(
         onError: errorListener, onStatus: statusListener);
@@ -112,7 +110,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> prompt() async {
     if (_hasSpeech) {
       await Future.delayed(const Duration(seconds: 1), () {});
-      print("listenig");
       startListening();
 
       await Future.delayed(const Duration(seconds: 7), () {});
@@ -124,7 +121,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> checkForLocation() async {
     String parseWords = lastWords.toLowerCase();
     if (parseWords == "FOUND TODO") {
-      // DO COOL STUFF HACKER MAN
     } else if (parseWords.contains("stop") || parseWords.contains("no")) {
       setState(() {
         _newVoiceText = "Okay, goodbye!";
