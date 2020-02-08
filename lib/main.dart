@@ -97,11 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
     String cityId = "329505";
     var response = await http.get(
         Uri.encodeFull(
-            "http://dataservice.accuweather.com/currentconditions/v1/${cityId}?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
+            "http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=GCGPPsIXMqZTvKobbvEvuSzCPusRNC8z&details=true"),
         headers: {"Accept": "application/json"});
     setState(() {
       var data = json.decode(response.body);
-      print(data);
       String icyConditions = checkForIcePossible(data);
       String currentConditions = getCurrentConditions(data);
       currentWeatherConditions = currentConditions + icyConditions;
@@ -124,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
       } else if (meanOfTwoMeasurements <= 10) {
         return " Ice is possible.";
       } else {
-        return "Ice is not likely.";
+        return " Ice is not likely.";
       }
     }
     // Do not expect icy conditions
@@ -136,19 +135,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String getCurrentConditions(var data) {
     String currentConditions = "";
+    double imperialTemperature = data[0]["Temperature"]["Imperial"]["Value"];
+    double imperialRealFeel = data[0]["RealFeelTemperature"]["Imperial"]["Value"];
     if (data[0]["HasPrecipitation"] == true) {
-      // Check percip type
+      // Check precipitation type
       currentConditions =
-          ' There is currently percipitation in the form of ${data[0]["PrecipitationType"]}.';
+          ' There is currently precipitation in the form of ${data[0]["PrecipitationType"]}.';
     } else {
-      currentConditions = "There is not any percipitation on the route.";
+      currentConditions = "There is not any precipitation on the route.";
     }
     currentConditions = currentConditions +
-        ' The current temperature is ${data[0]["Temperature"]["Imperial"]["Value"]}';
-    if (data[0]["Temperature"]["Imperial"]["Value"] !=
-        data[0]["RealFeelTemperature"]["Imperial"]["Value"]) {
+        ' The current temperature is $imperialTemperature';
+    if (imperialTemperature !=
+        imperialRealFeel) {
       return currentConditions +
-          ', however, it feels like ${data[0]["RealFeelTemperature"]["Imperial"]["Value"]} fahrenheit.';
+          ', however, it feels like $imperialRealFeel fahrenheit.';
     } else {
       return currentConditions + "fahrenheit.";
     }
