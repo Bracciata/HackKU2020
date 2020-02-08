@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
     PlacesAutocompleteResponse res =
-        await places.autocomplete(query, sessionToken: sessionToken);
+await places.autocomplete(query, sessionToken: sessionToken);
 
     if (res.isOkay) {
       // list autocomplete prediction
@@ -170,6 +170,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     } else {
       print(res.errorMessage);
+      setState(() {
+        _newVoiceText =
+            "Sorry I did not catch that. Where would you like to go?";
+            _expectedResponseTime = 7;
+      });
+      await Future.delayed(const Duration(seconds: 1), () {});
+      _speak();
     }
 
     places.dispose();
@@ -196,6 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if(parseWords.contains("yes")){
       // Using the address go to the location.
       getDirections();
+      print('YAY');
       // Send the directions to camera.
     }else if(parseWords.contains("no")){
       // End and repeat end of file
@@ -215,18 +223,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // TODO: Prevent from prompting here!!!
       _speak();
     } else{
+      print('Looking for the location $parseWords.');
       findLocation(parseWords);
       }
 
-      // Check for location finds location and sees where they want to go.
-     /* setState(() {
-        _newVoiceText =
-            "Sorry I did not catch that. Where would you like to go?";
-            _expectedResponseTime = 7;
-      });
-      await Future.delayed(const Duration(seconds: 1), () {});
-      _speak();
-    }}*/
+
   }
 
   void startListening() {
@@ -248,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void resultListener(SpeechRecognitionResult result) {
     setState(() {
-      lastWords = "${result.recognizedWords} - ${result.finalResult}";
+      lastWords = result.recognizedWords;
     });
   }
 
