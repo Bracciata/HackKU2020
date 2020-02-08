@@ -147,9 +147,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Location destinationLocation;
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
-    PlacesAutocompleteResponse res =
-        await places.autocomplete(query, sessionToken: sessionToken);
-
+    PlacesAutocompleteResponse res;
+    try {
+      res = await places.autocomplete(query, sessionToken: sessionToken);
+    } catch (Exception) {
+      setState(() {
+        confirmingAddress = true;
+        _newVoiceText =
+            "Sorry I did not catch that, is $nameOfPlace where you would like to go?";
+        _expectedResponseTime = 4;
+      });
+      _speak();
+      return;
+    }
     if (res.isOkay) {
       // list autocomplete prediction
       for (var p in res.predictions) {
