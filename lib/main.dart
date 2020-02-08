@@ -119,7 +119,16 @@ class _MyAppState extends State<MyApp> {
     }
   }
   void checkForLocation(){
+    if(lastWords == "FOUND TODO"){
+      // DO COOL STUFF HACKER MAN
+    }else{
+      setState(() {
+        _newVoiceText = "Sorry I did not catch that."
+        initTts();
+      });
 
+      prompt();
+    }
   }
   void startListening() {
     lastWords = "";
