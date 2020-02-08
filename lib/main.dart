@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   double rate = 0.4;
 
 
-  String _newVoiceText = "Tommy wake up!";
+  String _newVoiceText = "Hello, Welcome to CrossGuard. Where would you like to go? ";
 
   TtsState ttsState = TtsState.stopped;
 
@@ -39,8 +39,6 @@ class _MyAppState extends State<MyApp> {
     _speak();
     initSpeechState();
   }
-
-
 
   initTts() {
     flutterTts = FlutterTts();
@@ -94,10 +92,6 @@ class _MyAppState extends State<MyApp> {
     if (result == 1) setState(() => ttsState = TtsState.stopped);
   }
 
-
-
-
-  // TOMMY IS NOT MOMMY
   bool _hasSpeech = false;
   String lastWords = "";
   String lastError = "";
@@ -111,11 +105,11 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _hasSpeech = hasSpeech;
     });
-    await Future.delayed(const Duration(seconds: 16), (){});
+    await Future.delayed(const Duration(seconds: 4), (){});
     print("listenig");
     startListening();
 
-        await Future.delayed(const Duration(seconds: 16), (){});
+        await Future.delayed(const Duration(seconds: 7), (){});
     stop();
     print("DONE");
   }
