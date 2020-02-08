@@ -80,6 +80,18 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_tts",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_tts-0.8.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///C:/src/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "geolocator",
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/geolocator-5.2.1",
       "packageUri": "lib/",
@@ -120,6 +132,12 @@
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/image-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/json_annotation-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
     },
     {
       "name": "location",
@@ -188,6 +206,12 @@
       "languageVersion": "1.8"
     },
     {
+      "name": "speech_to_text",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/speech_to_text-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "stack_trace",
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/stack_trace-1.9.3",
       "packageUri": "lib/",
@@ -242,7 +266,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-08T18:25:20.433071Z",
+  "generated": "2020-02-08T19:06:41.185903Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.6.0.flutter-5ae5aff640"
 }
