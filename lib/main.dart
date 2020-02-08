@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_to_text/speech_to_text.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,11 +23,6 @@ class _MyAppState extends State<MyApp> {
   double pitch = 1.0;
   double rate = 0.4;
 
-  // speech to text
-  bool hasSpeech = false;
-  String lastWords = "";
-  String lastError = "";
-  String lastStatus = "";
 
   String _newVoiceText = "Tommy wake up!";
 
@@ -45,21 +40,7 @@ class _MyAppState extends State<MyApp> {
     initSpeechState();
   }
 
-  Future<void> initSpeechState() async {
-    stt.SpeechToText speech = stt.SpeechToText();
-    bool available = true; //await speech.initialize(onStatus: statusListener, onError: errorListener);
-    if (available) {
-      print('listening');
-        speech.listen(onResult: resultListener);
-    } else {
-        print("The user has deniedihoihlhljhlj the use of speech recognition.");
-    }
-    await Future.delayed(const Duration(seconds: 16), (){});
-    print('the wait is done. Emma is dead'); 
-    speech.stop();
-    print("EMMMMMMMAAAAA");
-    print(lastWords);
-  }
+
 
   initTts() {
     flutterTts = FlutterTts();
@@ -113,30 +94,71 @@ class _MyAppState extends State<MyApp> {
     if (result == 1) setState(() => ttsState = TtsState.stopped);
   }
 
+
+
+
+  // TOMMY IS NOT MOMMY
+  bool _hasSpeech = false;
+  String lastWords = "";
+  String lastError = "";
+  String lastStatus = "";
+  final SpeechToText speech = SpeechToText();
+
+  Future<void> initSpeechState() async {
+    bool hasSpeech = await speech.initialize(onError: errorListener, onStatus: statusListener );
+
+    if (!mounted) return;
+    setState(() {
+      _hasSpeech = hasSpeech;
+    });
+    await Future.delayed(const Duration(seconds: 16), (){});
+    print("listenig");
+    startListening();
+
+        await Future.delayed(const Duration(seconds: 16), (){});
+    stop();
+    print("DONE");
+  }
+
+  void startListening() {
+    lastWords = "";
+    lastError = "";
+    speech.listen(onResult: resultListener );
+    setState(() {
+      
+    });
+  }
+
+  void stopListening() {
+    speech.stop( );
+    setState(() {
+      
+    });
+  }
+
+  void cancelListening() {
+    speech.cancel( );
+    setState(() {
+      
+    });
+  }
+
   void resultListener(SpeechRecognitionResult result) {
-    print(result);
     setState(() {
       lastWords = "${result.recognizedWords} - ${result.finalResult}";
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    flutterTts.stop();
-  }
-
-  void errorListener(SpeechRecognitionError error) {
+  void errorListener(SpeechRecognitionError error ) {
     setState(() {
       lastError = "${error.errorMsg} - ${error.permanent}";
     });
   }
-  void statusListener(String status) {
+  void statusListener(String status ) {
     setState(() {
       lastStatus = "$status";
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
