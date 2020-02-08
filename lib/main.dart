@@ -127,7 +127,12 @@ class _MyAppState extends State<MyApp> {
     if (parseWords == "FOUND TODO") {
       // DO COOL STUFF HACKER MAN
     }else if(parseWords.contains("stop")||parseWords.contains("no")){
+      setState(() {
+        _newVoiceText = "Okay, goodbye!";
 
+      });
+      await Future.delayed(const Duration(seconds: 1), () {});
+      _speak();
     } else {
       setState(() {
         _newVoiceText = "Sorry I did not catch that. Where would you like to go?";
