@@ -18,7 +18,7 @@ class CameraPreviewScanner extends StatefulWidget {
 class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
   dynamic _scanResults;
   CameraController _camera;
-  Detector _currentDetector = Detector.text;
+  Detector _currentDetector = Detector.cloudLabel;
   bool _isDetecting = false;
   CameraLensDirection _direction = CameraLensDirection.back;
 
@@ -94,7 +94,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
               child: Text(
                 'Initializing Camera...',
                 style: TextStyle(
-                  color: Colors.green,
+                  color: Colors.deepPurple,
                   fontSize: 30.0,
                 ),
               ),
@@ -131,7 +131,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
     _currentDetector = Detector.cloudLabel;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ML Vision Example'),
+        title: const Text('Cross Guard'),
       ),
       body: _buildImage(),
       floatingActionButton: FloatingActionButton(
