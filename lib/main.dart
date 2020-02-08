@@ -159,7 +159,7 @@ void openCamera(){
   Navigator.push(
     parentContext,
     MaterialPageRoute(
-      builder: (context) => CameraPreviewScanner(directionsObj: directions),
+      builder: (context) => CameraPreviewScanner(directions: directionsObj),
     ));
 }
   Location destinationLocation;
@@ -222,7 +222,7 @@ void openCamera(){
 
     places.dispose();
   }
-  var directions;
+  var directionsObj;
   bool openingCamera = false;
   Future<void> getDirections() async {
     DirectionsResponse res = await directions.directionsWithLocation(
@@ -231,7 +231,7 @@ void openCamera(){
 
     print(res.status);
     if (res.isOkay) {
-      directions = res;
+      directionsObj = res;
       print('${res.routes.length} routes');
       for (var r in res.routes) {
         print(r.summary);
@@ -248,6 +248,7 @@ void openCamera(){
 
     setState(() {
       _newVoiceText = directionsInformation;
+      openingCamera = true;
     });
     _speak();
   }

@@ -9,8 +9,12 @@ import 'package:flutter/material.dart';
 
 import 'detector_painters.dart';
 import 'scanner_utils.dart';
+import 'package:google_maps_webservice/directions.dart';
 
 class CameraPreviewScanner extends StatefulWidget {
+  final DirectionsResponse directions;
+
+  const CameraPreviewScanner({Key key, this.directions}): super(key: key);
   @override
   State<StatefulWidget> createState() => _CameraPreviewScannerState();
 }
