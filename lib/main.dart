@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'camera.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,7 +45,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -79,11 +79,23 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-           
+            IconButton(
+              icon: Icon(Icons.star),
+              onPressed: () {
+                // Interactivity or events codes here
+                openCamera(context);
+              },
+            ),
           ],
         ),
       ),
-      
+    );
+  }
+
+  void openCamera(BuildContext context) {
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new CameraPreviewScanner()),
     );
   }
 }
