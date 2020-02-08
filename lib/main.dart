@@ -128,8 +128,14 @@ class _MyHomePageState extends State<MyHomePage> {
   // Prompt is called after _speak is called to say anything in this file.
   // Prompt activates the mic and then calls the parser.
   Future<void> prompt() async {
+    if(openingCamera){
+      // Do not prompt and open camera after text is said.
+      // This is here because this is called after text is said.
+      openCamera();
+    }
+    else if (promptUser) {
+
     if (_hasSpeech) {
-      if (promptUser) {
         await Future.delayed(const Duration(seconds: 1), () {});
         startListening();
         await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
@@ -138,12 +144,19 @@ class _MyHomePageState extends State<MyHomePage> {
         await Future.delayed(Duration(seconds: 1), () {});
 
         parseSpeachResponse();
-      }
+      
+  
     } else {
       print("Speech recognition is not enabled.");
     }
+    }
   }
-
+void openCamera(){
+  print("Opening the camera");
+  // TODO: Say weather before this.
+  // Weather has been said at this time sooooooooooo.
+  // Pass directions.
+}
   Location destinationLocation;
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
@@ -184,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Ask if location is correct and if so proceed.
       setState(() {
         _newVoiceText =
-            'Is ${details.result.formattedAddress} the correct address?';
+            'Is $nameOfPlace the correct address?';
         _expectedResponseTime = 4;
         confirmingAddress = true;
       });
@@ -204,6 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     places.dispose();
   }
+  var directions;
   bool openingCamera = false;
   Future<void> getDirections() async {
     DirectionsResponse res = await directions.directionsWithLocation(
@@ -212,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print(res.status);
     if (res.isOkay) {
+      directions = res;
       print('${res.routes.length} routes');
       for (var r in res.routes) {
         print(r.summary);
@@ -223,16 +238,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
     directions.dispose();
   }
+  void stateWeather(){
+    String directionsInformation = "Perfect, you are on route to $nameOfPlace. ";
 
+    setState(() {
+      _newVoiceText = directionsInformation;
+    });
+    _speak();
+  }
   String nameOfPlace;
   Future<void> parseSpeachResponse() async {
     String parseWords = lastWords.toLowerCase();
     if (confirmingAddress) {
       if (parseWords.contains("yes")) {
         // Using the address go to the location.
-        var directions = getDirections();
+        await getDirections();
         // Speak about weather then start journey and pass directions
+        stateWeather();
         // Send the directions to camera.
+        // After weather is stated the camera will open
       } else if (parseWords.contains("no")) {
         // End and repeat end of file
         setState(() {
