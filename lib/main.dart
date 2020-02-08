@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   String lastError = "";
   String lastStatus = "";
 
-  String _newVoiceText = "Kill Emma Hubka NOW";
+  String _newVoiceText = "Tommy wake up!";
 
   TtsState ttsState = TtsState.stopped;
 
@@ -47,15 +47,17 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initSpeechState() async {
     stt.SpeechToText speech = stt.SpeechToText();
-    bool available = await speech.initialize( onStatus: statusListener, onError: errorListener );
-    if ( available ) {
-        speech.listen( onResult: resultListener );
+    bool available = true; //await speech.initialize(onStatus: statusListener, onError: errorListener);
+    if (available) {
+      print('listening');
+        speech.listen(onResult: resultListener);
+    } else {
+        print("The user has deniedihoihlhljhlj the use of speech recognition.");
     }
-    else {
-        print("The user has denied the use of speech recognition.");
-    }
-    await Future.delayed(const Duration(seconds: 3), (){});
+    await Future.delayed(const Duration(seconds: 16), (){});
+    print('the wait is done. Emma is dead'); 
     speech.stop();
+    print("EMMMMMMMAAAAA");
     print(lastWords);
   }
 
@@ -105,12 +107,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  /*Future _stop() async {
+  Future stop() async {
     var result = await flutterTts.stop();
+    print(result);
     if (result == 1) setState(() => ttsState = TtsState.stopped);
-  }*/
+  }
 
   void resultListener(SpeechRecognitionResult result) {
+    print(result);
     setState(() {
       lastWords = "${result.recognizedWords} - ${result.finalResult}";
     });
@@ -122,12 +126,12 @@ class _MyAppState extends State<MyApp> {
     flutterTts.stop();
   }
 
-  void errorListener(SpeechRecognitionError error ) {
+  void errorListener(SpeechRecognitionError error) {
     setState(() {
       lastError = "${error.errorMsg} - ${error.permanent}";
     });
   }
-  void statusListener(String status ) {
+  void statusListener(String status) {
     setState(() {
       lastStatus = "$status";
     });
