@@ -303,6 +303,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
       ),
       body: _buildImage(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
         onPressed: _toggleCameraDirection,
         child: _direction == CameraLensDirection.back
             ? const Icon(Icons.camera_front)
