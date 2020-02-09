@@ -6,7 +6,7 @@
 ## What it does
 <p>This cross-platform mobile application aids disabled individuals, more specifically the blind, to navigate the busy streets on foot. Upon opening CrossGuard, the application prompts the user to state their destination. After confirming the destination with the user, CrossGuard outlines a route from their current location to their destination using Google Maps. CrossGuard then gives the user a summary of the weather conditions so the user is prepared and can determine whether or not it is safe for them to travel in the conditions. Then the application switches from the map to the user’s camera. As the user travels along the route, CrossGuard warns the user of upcoming intersections and alerts them when it is safe to proceed. Until the user reaches their destination, CrossGuard will continue to update them on directions and distances. Once the user has safely reached their destination, CrossGuard notifies them with a message saying “You have arrived”. </p>
 
-## How I built it
+## How we built it
 * To create the application we used Flutter (a cross-platform application development framework) and Dart because we wanted the application to be available to all users.
 * To implement the map feature, we used the Google Cloud Platform, Google Cloud Places API, Google Cloud Directions API, and Google Cloud API.
 * To achieve the real-time video assistant, we used the Google Vision API.
@@ -15,17 +15,17 @@
 * To create the logo and other graphics, we used Adobe Illustrator and Adobe Photoshop.
 * To efficiently progress through this project, we were determined to use GitHub to collaborate on this project. 
 
-## Challenges I ran into
+## Challenges we ran into
 * Without previous experience, we had trouble utilizing different packages and APIs.
 * While planning this project, we knew we wanted to use GitHub, a version control system we had all used before, to efficiently separate and manage our codebase. To further encourage the separation of tasks, we decided to utilize branches. We had only used branches once before, so we ran into plenty of challenges such as merge conflict and losing commits in other branches.
 * Another challenge we had to overcome was to maintain consistent communication throughout an agile environment with a short time frame.
 * There were times when we found it difficult to understand Flutter’s documentation due to its lack of history. 
 
-## Accomplishments that I'm proud of
+## Accomplishments that we're proud of
 * We are proud of how we were able to merge our work together. We were able to combine our ideas and research to create the best design possible, and we were able to combine the different parts of our implementation (user interface, backend, etc) cohesively into one final product.
 * This was our first time creating a cross-platform mobile application that runs on IOS and Andriod. 
 
-## What I learned
+## What we learned
 * We learned how to create a cross-platform Android and IOS app from scratch.
 * We learned how to implement different types of APIs.
 * We learned how to implement different packages.
