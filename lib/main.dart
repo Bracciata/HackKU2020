@@ -196,7 +196,7 @@ void openCamera(){
       builder: (context) => CameraPreviewScanner(directions: directionsObj),
     ));
 }
-  Location destinationLocation;
+  Location destinationLocation=new Location(0, 0);
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
     PlacesAutocompleteResponse res;
@@ -404,7 +404,7 @@ void openCamera(){
       body: _child,
     );
   }
-
+  
   Set<Marker> _createMarker() {
     return <Marker>[
       Marker(
@@ -412,11 +412,13 @@ void openCamera(){
           position: LatLng(position.latitude, position.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             25.0,
-          ),
+          ), 
+    
+
           infoWindow: InfoWindow(title: "Current Location")),
       Marker(
           markerId: MarkerId("destination"),
-          position: LatLng(38.95849, -95.247551),
+          position: LatLng( destinationLocation.lat, destinationLocation.lng),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             265.0,
           ),
