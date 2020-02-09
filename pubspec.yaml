@@ -19,10 +19,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  mapbox_gl: 
+  google_maps_flutter: ^0.5.22+2
+  geolocator: ^5.2.1
+  flutter_spinkit: 
+  google_maps_webservice:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  location: ^2.3.5
+  speech_to_text: 
+  flutter_tts:
   firebase_ml_vision:
   firebase_core: ^0.4.0
   camera: ^0.5.6+1
@@ -36,6 +43,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: 'images/crossGuard.png'
+
 
 
 # For information on the generic Dart part of this file, see the

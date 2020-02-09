@@ -9,8 +9,16 @@ import 'package:flutter/material.dart';
 
 import 'detector_painters.dart';
 import 'scanner_utils.dart';
+import 'package:google_maps_webservice/directions.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
+enum TtsState { playing, stopped }
 
 class CameraPreviewScanner extends StatefulWidget {
+  final DirectionsResponse directions;
+
+  const CameraPreviewScanner({Key key, this.directions}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _CameraPreviewScannerState();
 }
@@ -18,22 +26,15 @@ class CameraPreviewScanner extends StatefulWidget {
 class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
   dynamic _scanResults;
   CameraController _camera;
-  Detector _currentDetector = Detector.text;
+  Detector _currentDetector = Detector.cloudLabel;
   bool _isDetecting = false;
   CameraLensDirection _direction = CameraLensDirection.back;
-
-  final BarcodeDetector _barcodeDetector =
-      FirebaseVision.instance.barcodeDetector();
-  final FaceDetector _faceDetector = FirebaseVision.instance.faceDetector();
-  final ImageLabeler _imageLabeler = FirebaseVision.instance.imageLabeler();
   final ImageLabeler _cloudImageLabeler =
       FirebaseVision.instance.cloudImageLabeler();
-  final TextRecognizer _recognizer = FirebaseVision.instance.textRecognizer();
-  final TextRecognizer _cloudRecognizer =
-      FirebaseVision.instance.cloudTextRecognizer();
 
   @override
   void initState() {
+    initTts();
     super.initState();
     _initializeCamera();
   }
@@ -57,7 +58,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
 
       ScannerUtils.detect(
         image: image,
-        detectInImage: _getDetectionMethod(),
+        detectInImage: _cloudImageLabeler.processImage,
         imageRotation: description.sensorOrientation,
       ).then(
         (dynamic results) {
@@ -68,25 +69,6 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
         },
       ).whenComplete(() => _isDetecting = false);
     });
-  }
-
-  Future<dynamic> Function(FirebaseVisionImage image) _getDetectionMethod() {
-    switch (_currentDetector) {
-      case Detector.text:
-        return _recognizer.processImage;
-      case Detector.cloudText:
-        return _cloudRecognizer.processImage;
-      case Detector.barcode:
-        return _barcodeDetector.detectInImage;
-      case Detector.label:
-        return _imageLabeler.processImage;
-      case Detector.cloudLabel:
-        return _cloudImageLabeler.processImage;
-      case Detector.face:
-        return _faceDetector.processImage;
-    }
-
-    return null;
   }
 
   Widget _buildResults() {
@@ -104,34 +86,41 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
       _camera.value.previewSize.height,
       _camera.value.previewSize.width,
     );
-
-    switch (_currentDetector) {
-      case Detector.barcode:
-        if (_scanResults is! List<Barcode>) return noResultsText;
-        painter = BarcodeDetectorPainter(imageSize, _scanResults);
-        break;
-      case Detector.face:
-        if (_scanResults is! List<Face>) return noResultsText;
-        painter = FaceDetectorPainter(imageSize, _scanResults);
-        break;
-      case Detector.label:
-        if (_scanResults is! List<ImageLabel>) return noResultsText;
-        painter = LabelDetectorPainter(imageSize, _scanResults);
-        break;
-      case Detector.cloudLabel:
-        if (_scanResults is! List<ImageLabel>) return noResultsText;
-        painter = LabelDetectorPainter(imageSize, _scanResults);
-        break;
-      default:
-        assert(_currentDetector == Detector.text ||
-            _currentDetector == Detector.cloudText);
-        if (_scanResults is! VisionText) return noResultsText;
-        painter = TextDetectorPainter(imageSize, _scanResults);
-    }
+    if (_scanResults is! List<ImageLabel>) return noResultsText;
+    painter = LabelDetectorPainter(imageSize, _scanResults);
+    checkForTrafficLights(_scanResults);
 
     return CustomPaint(
       painter: painter,
     );
+  }
+  String lastOptionWas="STOP";
+  void checkForTrafficLights(var results) {
+    print(results);
+    int x = 7;
+    for (var result in results){
+      
+      if(result.text=="Blue"&& result.confidence>.98 ){
+        if(lastOptionWas!="STOP"){
+          lastOptionWas = "STOP";
+          setState(() {
+            _newVoiceText = "Stop for the traffic light.";
+          });
+          _speak();
+        }
+        // Stop
+    }else if(result.text=="Leaf"&& result.confidence>.9){
+
+        if(lastOptionWas!="GO"){
+          lastOptionWas = "GO";
+                    setState(() {
+            _newVoiceText = "Cross through the cross walk.";
+          });
+          _speak();
+        }
+    }
+    }
+
   }
 
   Widget _buildImage() {
@@ -142,7 +131,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
               child: Text(
                 'Initializing Camera...',
                 style: TextStyle(
-                  color: Colors.green,
+                  color: Colors.deepPurple,
                   fontSize: 30.0,
                 ),
               ),
@@ -174,47 +163,147 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
     _initializeCamera();
   }
 
+  var stepsList;
+  void getAllStepsAndRelevantInfo() {
+    var waypoints = directions.routes.first.legs.first.steps.iterator;
+    stepsList = [];
+    while (waypoints.moveNext()) {
+      stepsList.add(waypoints.current);
+      print("Adding to steps list.");
+    }
+    print(stepsList);
+  }
+
+  int currentLocationStepIndex = -1;
+  Future<void> checkLocation() async {
+    // Check if close enough and not the same index.
+    await getCurrentLocation();
+    int index = 0;
+    for (var item in stepsList) {
+      if (currentLocationStepIndex != index) {
+        bool withinRange = false;
+        Location locOfStart = item.startLocation;
+        if ((locOfStart.lat - currentLocation.lat).abs() < .0002 &&
+            (locOfStart.lng - currentLocation.lng).abs() < .0002) {
+          withinRange = true;
+        }
+        if (withinRange) {
+          // Say
+          currentLocationStepIndex = index;
+
+          String say;
+          try {
+            if (item.maneuver == null) {
+              say =
+                  'Go ${item.distance.text}. This will take approximately ${item.duration.text}';
+            } else {
+              say =
+                  '${item.maneuver} then go ${item.distance.text}. This will take approximately ${item.duration.text}';
+            }
+          } catch (Exception) {
+            say =
+                'Go ${item.distance.text}. This will take approximately ${item.duration.text}';
+          }
+          currentLocationStepIndex = index;
+          if (index == stepsList.length) {
+            say = "You have arrived!";
+            // Notify them and close the app.
+            // You have arrived
+          }
+          setState(() {
+            _newVoiceText = say;
+          });
+          _speak();
+        }
+      }
+      index += 1;
+    }
+  }
+
+  Location currentLocation;
+  void getCurrentLocation() async {
+    Position res = await Geolocator().getCurrentPosition();
+    setState(() {
+      currentLocation = Location(res.latitude, res.longitude);
+    });
+  }
+
+  // text to speech
+  String _newVoiceText =
+      "Hello, Welcome to CrossGuard. Where would you like to go? ";
+  FlutterTts flutterTts;
+  dynamic languages;
+  String language;
+  double volume = 0.5;
+  double pitch = 1.0;
+  double rate = 0.4;
+  TtsState ttsState = TtsState.stopped;
+  get isPlaying => ttsState == TtsState.playing;
+
+  get isStopped => ttsState == TtsState.stopped;
+
+  initTts() {
+    flutterTts = FlutterTts();
+
+    _getLanguages();
+
+    flutterTts.setStartHandler(() {
+      setState(() {
+        ttsState = TtsState.playing;
+      });
+    });
+
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        ttsState = TtsState.stopped;
+      });
+    });
+  }
+
+  Future _getLanguages() async {
+    languages = await flutterTts.getLanguages;
+    if (languages != null) setState(() => languages);
+  }
+
+  Future _speak() async {
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+
+    if (_newVoiceText != null) {
+      if (_newVoiceText.isNotEmpty) {
+        var result = await flutterTts.speak(_newVoiceText);
+        if (result == 1) setState(() => ttsState = TtsState.playing);
+      }
+    }
+  }
+
+  Future stop() async {
+    var result = await flutterTts.stop();
+    if (result == 1) setState(() => ttsState = TtsState.stopped);
+  }
+
+  var directions;
   @override
   Widget build(BuildContext context) {
+    print(widget.directions);
+    directions = widget.directions;
+    _currentDetector = Detector.cloudLabel;
+    getAllStepsAndRelevantInfo();
+    checkLocation();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ML Vision Example'),
-        actions: <Widget>[
-          PopupMenuButton<Detector>(
-            onSelected: (Detector result) {
-              _currentDetector = result;
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<Detector>>[
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Barcode'),
-                value: Detector.barcode,
-              ),
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Face'),
-                value: Detector.face,
-              ),
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Label'),
-                value: Detector.label,
-              ),
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Cloud Label'),
-                value: Detector.cloudLabel,
-              ),
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Text'),
-                value: Detector.text,
-              ),
-              const PopupMenuItem<Detector>(
-                child: Text('Detect Cloud Text'),
-                value: Detector.cloudText,
-              ),
-            ],
-          ),
-        ],
+        title: const Text('Cross Guard'),
       ),
       body: _buildImage(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
         onPressed: _toggleCameraDirection,
         child: _direction == CameraLensDirection.back
             ? const Icon(Icons.camera_front)
@@ -226,12 +315,7 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
   @override
   void dispose() {
     _camera.dispose().then((_) {
-      _barcodeDetector.close();
-      _faceDetector.close();
-      _imageLabeler.close();
       _cloudImageLabeler.close();
-      _recognizer.close();
-      _cloudRecognizer.close();
     });
 
     _currentDetector = null;
