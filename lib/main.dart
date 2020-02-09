@@ -61,9 +61,16 @@ class _MyHomePageState extends State<MyHomePage> {
       String icyConditions = checkForIcePossible(data);
       String currentConditions = getCurrentConditions(data);
       String windConditions = getWindSpeed(data);
-      currentWeatherConditions = currentConditions + icyConditions + windConditions;
+      String weatherCondition = checkWeatherCondition(data);
+      currentWeatherConditions = currentConditions + icyConditions + windConditions + weatherCondition;
+      print(currentWeatherConditions);
     });
     return "Success";
+  }
+
+  String checkWeatherCondition(var data) {
+    String condition = data[0]["WeatherText"];
+    return " The current weather condition is: $condition.";
   }
 
   String checkForIcePossible(var data) {
@@ -116,9 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String getWindSpeed(var data) {
     double windSpeed = data[0]["Wind"]["Speed"]["Imperial"]["Value"];
     if (windSpeed >= 40) {
-      return 'Caution, the wind speed is $windSpeed miles per hour.';
+      return ' Caution, the wind speed is $windSpeed miles per hour.';
     }
-    return 'No significant wind.';
+    return ' No significant wind.';
   }
 
 }
