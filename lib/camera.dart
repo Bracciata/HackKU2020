@@ -94,10 +94,33 @@ class _CameraPreviewScannerState extends State<CameraPreviewScanner> {
       painter: painter,
     );
   }
-
+  String lastOptionWas="STOP";
   void checkForTrafficLights(var results) {
     print(results);
     int x = 7;
+    for (var result in results){
+      
+      if(result.text=="Blue"&& result.confidence>.98 ){
+        if(lastOptionWas!="STOP"){
+          lastOptionWas = "STOP";
+          setState(() {
+            _newVoiceText = "Stop for the traffic light.";
+          });
+          _speak();
+        }
+        // Stop
+    }else if(result.text=="Leaf"&& result.confidence>.9){
+
+        if(lastOptionWas!="GO"){
+          lastOptionWas = "GO";
+                    setState(() {
+            _newVoiceText = "Cross through the cross walk.";
+          });
+          _speak();
+        }
+    }
+    }
+
   }
 
   Widget _buildImage() {
