@@ -12,7 +12,6 @@ import 'camera.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 enum TtsState { playing, stopped }
 
 final places =
@@ -21,32 +20,30 @@ final directions =
     GoogleMapsDirections(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
 void main() => runApp(App());
 
-Map<int, Color> color =
-{
-50:Color.fromRGBO(81,12,118, .1),
-100:Color.fromRGBO(81,12,118, .2),
-200:Color.fromRGBO(81,12,118, .3),
-300:Color.fromRGBO(81,12,118, .4),
-400:Color.fromRGBO(81,12,118, .5),
-500:Color.fromRGBO(81,12,118, .6),
-600:Color.fromRGBO(81,12,118, .7),
-700:Color.fromRGBO(81,12,118, .8),
-800:Color.fromRGBO(81,12,118, .9),
-900:Color.fromRGBO(81,12,118, 1),
+Map<int, Color> color = {
+  50: Color.fromRGBO(81, 12, 118, .1),
+  100: Color.fromRGBO(81, 12, 118, .2),
+  200: Color.fromRGBO(81, 12, 118, .3),
+  300: Color.fromRGBO(81, 12, 118, .4),
+  400: Color.fromRGBO(81, 12, 118, .5),
+  500: Color.fromRGBO(81, 12, 118, .6),
+  600: Color.fromRGBO(81, 12, 118, .7),
+  700: Color.fromRGBO(81, 12, 118, .8),
+  800: Color.fromRGBO(81, 12, 118, .9),
+  900: Color.fromRGBO(81, 12, 118, 1),
 };
 
-Map<int, Color> darkColor =
-{
-50:Color.fromRGBO(126,87,198, .1),
-100:Color.fromRGBO(126,87,198, .2),
-200:Color.fromRGBO(126,87,198, .3),
-300:Color.fromRGBO(126,87,198, .4),
-400:Color.fromRGBO(126,87,198, .5),
-500:Color.fromRGBO(126,87,198, .6),
-600:Color.fromRGBO(126,87,198, .7),
-700:Color.fromRGBO(126,87,198, .8),
-800:Color.fromRGBO(126,87,198, .9),
-900:Color.fromRGBO(126,87,198, 1),
+Map<int, Color> darkColor = {
+  50: Color.fromRGBO(126, 87, 198, .1),
+  100: Color.fromRGBO(126, 87, 198, .2),
+  200: Color.fromRGBO(126, 87, 198, .3),
+  300: Color.fromRGBO(126, 87, 198, .4),
+  400: Color.fromRGBO(126, 87, 198, .5),
+  500: Color.fromRGBO(126, 87, 198, .6),
+  600: Color.fromRGBO(126, 87, 198, .7),
+  700: Color.fromRGBO(126, 87, 198, .8),
+  800: Color.fromRGBO(126, 87, 198, .9),
+  900: Color.fromRGBO(126, 87, 198, 1),
 };
 
 MaterialColor colorCustom = MaterialColor(0xFF7E57C6, darkColor);
@@ -162,14 +159,12 @@ class _MyHomePageState extends State<MyHomePage> {
   // Prompt is called after _speak is called to say anything in this file.
   // Prompt activates the mic and then calls the parser.
   Future<void> prompt() async {
-    if(openingCamera){
+    if (openingCamera) {
       // Do not prompt and open camera after text is said.
       // This is here because this is called after text is said.
       openCamera();
-    }
-    else if (promptUser) {
-
-    if (_hasSpeech) {
+    } else if (promptUser) {
+      if (_hasSpeech) {
         await Future.delayed(const Duration(seconds: 1), () {});
         startListening();
         await Future.delayed(Duration(seconds: _expectedResponseTime), () {});
@@ -178,25 +173,25 @@ class _MyHomePageState extends State<MyHomePage> {
         await Future.delayed(Duration(seconds: 1), () {});
 
         parseSpeachResponse();
-      
-  
-    } else {
-      print("Speech recognition is not enabled.");
-    }
+      } else {
+        print("Speech recognition is not enabled.");
+      }
     }
   }
-void openCamera(){
-  print("Opening the camera");
-  // TODO: Say weather before this.
-  // Weather has been said at this time.
-  // Pass directions.
-  Navigator.push(
-    parentContext,
-    MaterialPageRoute(
-      builder: (context) => CameraPreviewScanner(directions: directionsObj),
-    ));
-}
-  Location destinationLocation=new Location(0, 0);
+
+  void openCamera() {
+    print("Opening the camera");
+    // TODO: Say weather before this.
+    // Weather has been said at this time.
+    // Pass directions.
+    Navigator.push(
+        parentContext,
+        MaterialPageRoute(
+          builder: (context) => CameraPreviewScanner(directions: directionsObj),
+        ));
+  }
+
+  Location destinationLocation = new Location(0, 0);
   Future<void> findLocation(String query) async {
     String sessionToken = 'xyzabc_1234';
     PlacesAutocompleteResponse res;
@@ -235,8 +230,7 @@ void openCamera(){
       destinationLocation = Location(latDest, lngDest);
       // Ask if location is correct and if so proceed.
       setState(() {
-        _newVoiceText =
-            'Is $nameOfPlace the correct address?';
+        _newVoiceText = 'Is $nameOfPlace the correct address?';
         _expectedResponseTime = 4;
         confirmingAddress = true;
       });
@@ -254,6 +248,7 @@ void openCamera(){
 
     places.dispose();
   }
+
   var directionsObj;
   bool openingCamera = false;
   Future<void> getDirections() async {
@@ -275,8 +270,10 @@ void openCamera(){
 
     directions.dispose();
   }
+
   Future<void> stateWeather() async {
-    String directionsInformation = "Perfect, you are on route to $nameOfPlace. ";
+    String directionsInformation =
+        "Perfect, you are on route to $nameOfPlace. ";
     await getData();
     directionsInformation = directionsInformation + currentWeatherConditions;
     setState(() {
@@ -285,6 +282,7 @@ void openCamera(){
     });
     _speak();
   }
+
   String nameOfPlace;
   Future<void> parseSpeachResponse() async {
     String parseWords = lastWords.toLowerCase();
@@ -303,7 +301,6 @@ void openCamera(){
           _newVoiceText = "My bad. Where would you like to go?";
           _expectedResponseTime = 7;
         });
-
         _speak();
       } else {
         setState(() {
@@ -339,7 +336,7 @@ void openCamera(){
   }
 
   // TODO: When prompting is it the correct location add a marker for the location because that is cool.
-  bool promptUser = true;
+  bool promptUser;
   void startListening() {
     lastWords = "";
     lastError = "";
@@ -369,7 +366,7 @@ void openCamera(){
     });
   }
 
-  bool confirmingAddress = false;
+  bool confirmingAddress;
   void statusListener(String status) {
     setState(() {
       lastStatus = "$status";
@@ -378,6 +375,8 @@ void openCamera(){
 
   @override
   void initState() {
+    confirmingAddress = false;
+    promptUser = true;
     getCurrentLocation();
     super.initState();
     initTts();
@@ -393,10 +392,11 @@ void openCamera(){
       _child = mapWidget();
     });
   }
+
   BuildContext parentContext;
   @override
   Widget build(BuildContext context) {
-    parentContext=context;
+    parentContext = context;
     return Scaffold(
       appBar: AppBar(
         title: Text('CrossGuard'),
@@ -404,7 +404,7 @@ void openCamera(){
       body: _child,
     );
   }
-  
+
   Set<Marker> _createMarker() {
     return <Marker>[
       Marker(
@@ -412,13 +412,11 @@ void openCamera(){
           position: LatLng(position.latitude, position.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             25.0,
-          ), 
-    
-
+          ),
           infoWindow: InfoWindow(title: "Current Location")),
       Marker(
           markerId: MarkerId("destination"),
-          position: LatLng( destinationLocation.lat, destinationLocation.lng),
+          position: LatLng(destinationLocation.lat, destinationLocation.lng),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             265.0,
           ),
@@ -439,6 +437,7 @@ void openCamera(){
       },
     );
   }
+
   String currentWeatherConditions = "";
   Future<String> getData() async {
     String cityId = "329505";
@@ -452,9 +451,9 @@ void openCamera(){
       String currentConditions = getCurrentConditions(data);
       String windConditions = getWindSpeed(data);
       String weatherCondition = checkWeatherCondition(data);
-      currentWeatherConditions = currentConditions + icyConditions + windConditions + weatherCondition;
+      currentWeatherConditions =
+          currentConditions + icyConditions + windConditions + weatherCondition;
       print(currentWeatherConditions);
-
     });
     return "Success";
   }
@@ -492,7 +491,8 @@ void openCamera(){
   String getCurrentConditions(var data) {
     String currentConditions = "";
     double imperialTemperature = data[0]["Temperature"]["Imperial"]["Value"];
-    double imperialRealFeel = data[0]["RealFeelTemperature"]["Imperial"]["Value"];
+    double imperialRealFeel =
+        data[0]["RealFeelTemperature"]["Imperial"]["Value"];
     if (data[0]["HasPrecipitation"] == true) {
       // Check precipitation type
       currentConditions =
@@ -500,10 +500,9 @@ void openCamera(){
     } else {
       currentConditions = "There is not any precipitation on the route.";
     }
-    currentConditions = currentConditions +
-        ' The current temperature is $imperialTemperature';
-    if (imperialTemperature !=
-        imperialRealFeel) {
+    currentConditions =
+        currentConditions + ' The current temperature is $imperialTemperature';
+    if (imperialTemperature != imperialRealFeel) {
       return currentConditions +
           ', however, it feels like $imperialRealFeel fahrenheit.';
     } else {
