@@ -516,6 +516,6 @@ void openCamera(){
     if (windSpeed >= 40) {
       return ' Caution, the wind speed is $windSpeed miles per hour.';
     }
-    return ' No significant wind.';
+    return ' There is not any significant wind.';
   }
 }
