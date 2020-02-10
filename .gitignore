@@ -113,5 +113,6 @@ app.*.symbols
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
 
+# Hide API keys from the public
 lib/api_key.dart
 android/app/google-services.json
