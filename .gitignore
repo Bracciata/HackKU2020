@@ -114,3 +114,4 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 lib/api_key.dart
+android/app/google-services.json
