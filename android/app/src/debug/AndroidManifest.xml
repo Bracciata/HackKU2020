@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.hackku2020">
+    <!-- Flutter needs it to communicate with the running application
+         to allow setting breakpoints, to provide hot reload, etc.
+    -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <meta-data android:name="com.mapbox.token" android:value="pk.eyJ1IjoiZGFubnliYXplIiwiYSI6ImNrNWp4amRvZDA4NnEzaXBndWl6ZzBweDQifQ.pKic1DM0S1FVY_pvodbJuw" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBJvXki_O23NgwNyxPDlstAyeJJaeUoMkU"/>
+    </application>
+</manifest>
+
