@@ -104,16 +104,58 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "flutter_spinkit",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_spinkit-4.1.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.5"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/src/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_tts",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_tts-0.8.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///C:/src/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "geolocator",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/geolocator-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "google_api_availability",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/google_api_availability-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "google_maps_flutter",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.22+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "google_maps_webservice",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/google_maps_webservice-0.0.16",
+      "packageUri": "lib/",
+      "languageVersion": "1.20"
     },
     {
       "name": "http",
@@ -138,6 +180,30 @@
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/js-0.6.1+1",
       "packageUri": "lib/",
       "languageVersion": "1.19"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/json_annotation-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "location",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/location-2.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "location_permissions",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/location_permissions-2.0.4+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "mapbox_gl",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/mapbox_gl-0.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "matcher",
@@ -186,6 +252,12 @@
       "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/source_span-1.5.5",
       "packageUri": "lib/",
       "languageVersion": "1.8"
+    },
+    {
+      "name": "speech_to_text",
+      "rootUri": "file:///C:/Users/bracc/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/speech_to_text-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "stack_trace",
@@ -248,7 +320,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-02-08T17:04:35.936602Z",
+  "generated": "2020-02-10T04:34:28.416607Z",
   "generator": "pub",
-  "generatorVersion": "2.8.0-dev.6.0.flutter-5ae5aff640"
+  "generatorVersion": "2.8.0-dev.8.0.flutter-514a8d4c84"
 }

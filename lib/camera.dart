@@ -13,6 +13,7 @@ import 'package:google_maps_webservice/directions.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+
 enum TtsState { playing, stopped }
 
 class CameraPreviewScanner extends StatefulWidget {

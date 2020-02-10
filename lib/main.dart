@@ -11,13 +11,12 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'camera.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'api_key.dart';
 
 enum TtsState { playing, stopped }
-
-final places =
-    GoogleMapsPlaces(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
-final directions =
-    GoogleMapsDirections(apiKey: 'AIzaSyC_alUaPxZr-P7wTRhNLYFgM6Yj5XgHQ40');
+Keys apiKeys = new Keys();
+final places = GoogleMapsPlaces(apiKey: apiKeys.googleMapsApiKey);
+final directions = GoogleMapsDirections(apiKey: apiKeys.googleMapsApiKey);
 void main() => runApp(App());
 
 Map<int, Color> color = {
@@ -443,7 +442,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String cityId = "329505";
     var response = await http.get(
         Uri.encodeFull(
-            "http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=MgM72YaXfJBWfOAdd6ebahZmM8eT5zAA&details=true"),
+            "http://dataservice.accuweather.com/currentconditions/v1/$cityId?apikey=${apiKeys.accuweatherAPIKey}&details=true"),
         headers: {"Accept": "application/json"});
     setState(() {
       var data = json.decode(response.body);
