@@ -1,4 +1,4 @@
-# hackku2020
+# CrossGuard at HackKU2020
  
 ## Inspiration
 <p>We were inspired to create the CrossGuard when we saw a blind walking group in downtown Lincoln, Nebraska. They walk nearly every day for about an hour and they require a guide to transverse around Lincoln due to the traffic lights in Lincoln that change automatically instead of by a simple button press; they also do not have an audio indication of light changes. This requires each of the members in the blind group to have a guide whenever they want to travel somewhere. As a result, this restricts their opportunities to freely move around the city. This inspired us to create CrossGuard, an application designed to help remove these restrictions.</p>
